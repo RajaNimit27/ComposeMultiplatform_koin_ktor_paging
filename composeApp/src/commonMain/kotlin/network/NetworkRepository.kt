@@ -10,7 +10,6 @@ import models.Products
 import network.ApiService.getProducts
 
 class NetworkRepository(private val httpClient: HttpClient) {
-
     fun getProducts(): Flow<PagingData<Products>> = Pager(
         config = PagingConfig(
             pageSize = 10,
@@ -24,7 +23,4 @@ class NetworkRepository(private val httpClient: HttpClient) {
             }
         }
     ).flow
-
-
-
 }
