@@ -11,11 +11,7 @@ import network.ApiService.getProducts
 
 class NetworkRepository(private val httpClient: HttpClient) {
     fun getProducts(): Flow<PagingData<Products>> = Pager(
-        config = PagingConfig(
-            pageSize = 10,
-            initialLoadSize = 10,
-            enablePlaceholders = false,
-        ),
+        config = PagingConfig(pageSize = 10, initialLoadSize = 10, enablePlaceholders = false,),
         pagingSourceFactory = {
             ResultPagingSource { page, _ ->
                 delay(500)
