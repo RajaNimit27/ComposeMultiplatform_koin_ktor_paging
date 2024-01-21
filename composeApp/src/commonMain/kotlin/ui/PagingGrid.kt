@@ -59,7 +59,7 @@ fun <T : Any> PagingGrid(
                 refresh is LoadStateLoading -> {
                     item {
                         Box(
-                            modifier = Modifier.fillMaxSize(),
+                            modifier = Modifier.fillMaxSize().padding(20.dp),
                             contentAlignment = Alignment.Center
                         ) {
                             CircularProgressIndicator(
@@ -73,7 +73,7 @@ fun <T : Any> PagingGrid(
                         CircularProgressIndicator(
                             color = Color.Red,
                             modifier = Modifier.fillMaxWidth(1f)
-                                .padding(16.dp)
+                                .padding(20.dp)
                                 .wrapContentWidth(Alignment.CenterHorizontally)
                         )
                     }

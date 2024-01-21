@@ -14,7 +14,7 @@ class NetworkRepository(private val httpClient: HttpClient) {
         config = PagingConfig(pageSize = 10, initialLoadSize = 10, enablePlaceholders = false,),
         pagingSourceFactory = {
             ResultPagingSource { page, _ ->
-                delay(500)
+                delay(800)
                 httpClient.getProducts(page).map { it.list }
             }
         }
