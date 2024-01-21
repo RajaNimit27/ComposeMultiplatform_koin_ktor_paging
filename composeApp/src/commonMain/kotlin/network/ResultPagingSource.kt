@@ -3,7 +3,7 @@ package network
 import androidx.paging.PagingState
 import app.cash.paging.PagingSource
 
-open class ResultPagingSource<T : Any>(private val fetch: suspend (page: Int, pageSize: Int) -> Result<List<T>>) :
+open class ResultPagingSource<T : Any>(private val pagingData: suspend (page: Int, pageSize: Int) -> Result<List<T>>) :
     PagingSource<Int, T>() {
 
     override fun getRefreshKey(state: PagingState<Int, T>): Int? = null
@@ -11,10 +11,10 @@ open class ResultPagingSource<T : Any>(private val fetch: suspend (page: Int, pa
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, T> =
         (params.key ?: 1).let { _page ->
             try {
-                fetch(_page, params.loadSize)
+                pagingData(_page, params.loadSize)
                     .run {
                         when (this) {
-                            /* success state */
+                            /* success */
                             is Result.Success -> {
                                 LoadResult.Page(
                                     data = value,
@@ -24,11 +24,8 @@ open class ResultPagingSource<T : Any>(private val fetch: suspend (page: Int, pa
                                     nextKey = _page.takeIf { value.size >= params.loadSize }?.inc()
                                 )
                             }
-
-                            /* error state */
+                            /* error */
                             is Error -> LoadResult.Error(this)
-
-                            /* should not reach this point */
                             else -> LoadResult.Error(IllegalStateException("$this type of [Result] is not allowed here"))
                         }
                     }
