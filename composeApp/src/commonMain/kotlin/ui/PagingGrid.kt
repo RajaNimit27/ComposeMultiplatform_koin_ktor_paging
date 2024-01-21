@@ -1,9 +1,6 @@
 package ui
 
 import androidx.compose.runtime.Composable
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,11 +9,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Divider
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.ui.Alignment
@@ -45,7 +40,6 @@ fun <T : Any> PagingGrid(
             val item = data[index]
             item?.let { content(it) }
         }
-
         data.loadState.apply {
             when {
                 refresh is LoadStateNotLoading && data.itemCount < 1 -> {
@@ -62,11 +56,10 @@ fun <T : Any> PagingGrid(
                         }
                     }
                 }
-
                 refresh is LoadStateLoading -> {
                     item {
                         Box(
-                            modifier = Modifier.fillMaxSize(1f),
+                            modifier = Modifier.fillMaxSize(),
                             contentAlignment = Alignment.Center
                         ) {
                             CircularProgressIndicator(
@@ -75,7 +68,6 @@ fun <T : Any> PagingGrid(
                         }
                     }
                 }
-
                 append is LoadStateLoading -> {
                     item {
                         CircularProgressIndicator(
@@ -86,7 +78,6 @@ fun <T : Any> PagingGrid(
                         )
                     }
                 }
-
                 refresh is LoadStateError -> {
                     item {
                         ErrorView(
@@ -96,7 +87,6 @@ fun <T : Any> PagingGrid(
                         )
                     }
                 }
-
                 append is LoadStateError -> {
                     item {
                         ErrorItem(
